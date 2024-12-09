@@ -4,7 +4,9 @@
         <div class="row">
             <div class="col-12">
                 <h1 class="mt-3 p-3 border text-center bg-dark text-white rounded">All Posts</h1>
-                <a href="{{ route('post.create') }}" class="btn btn-primary my-3">Add New Post</a>
+                @can('create-post')
+                    <a href="{{ route('post.create') }}" class="btn btn-primary my-3">Add New Post</a>
+                @endcan
             </div>
             <div class="col-12">
                 <x-error></x-error>
@@ -28,24 +30,26 @@
                                 <td>{{ Str::limit($post->description, 50, '.........') }}</td>
                                 <td>{{ $post->user->name }}</td>
                                 <td>
-                                    @foreach ($post->tags as $tag )
+                                    @foreach ($post->tags as $tag)
                                         <span class="badge bg-warning my-1">{{ $tag->name }}</span>
                                         <br>
                                     @endforeach
                                 </td>
-                                <td class="text-center"> 
+                                <td class="text-center">
                                     <img src="{{ $post->image() }}" height="100" width="100" alt="">
                                 </td>
-                                <td class="text-center">
-                                    <a href="{{ route('post.edit', $post->id) }}" class="btn btn-info">Edit</a>
-                                </td>
-                                <td class="text-center">
-                                    <form action="{{ route('post.delete', $post->id) }}" method="POSt">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="submit" href="" value="Delete" class="btn btn-danger">
-                                    </form>
-                                </td>
+                                {{-- @can('update-post', $post) --}}
+                                    <td class="text-center">
+                                        <a href="{{ route('post.edit', $post->id) }}" class="btn btn-info">Edit</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <form action="{{ route('post.delete', $post->id) }}" method="POSt">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="submit" href="" value="Delete" class="btn btn-danger">
+                                        </form>
+                                    </td>
+                                {{-- @endcan --}}
                             </tr>
                         @empty
                             <div class="col-12">

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Front\PostRequest;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -28,6 +29,7 @@ class PostController extends Controller
 
     public function create()
     {
+        // Gate::authorize('create-post');
         $users = User::select('id', 'name')->get();
         $tags = Tag::select('id', 'name')->get();
         return view('front.pages.Posts.create', compact('users', 'tags'));
@@ -41,6 +43,7 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
+        // Gate::authorize('create-post');
 
         $image = $request->file('image')->store('/public');
         $post = Post::create([

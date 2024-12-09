@@ -6,9 +6,15 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Front\TagRequest;
+use Illuminate\Support\Facades\Gate;
 
 class TagController extends Controller
 {
+
+    // public function __construct()
+    // {
+    //     Gate::authorize('admin-control');
+    // }
     /**
      * Display a listing of the resource.
      */

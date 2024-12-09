@@ -7,10 +7,15 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Front\UserRequest;
 
 class UserController extends Controller
 {
+    // public function __construct()
+    // {
+    //     Gate::authorize('admin-control');
+    // }
     /**
      * Display a listing of the resource.
      */
