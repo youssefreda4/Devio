@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Front\Tag\TagController;
-use App\Http\Controllers\Front\Home\HomeController;
-use App\Http\Controllers\Front\Post\PostController;
-use App\Http\Controllers\Front\User\UserController;
+use App\Http\Controllers\Admin\Tag\TagController;
+use App\Http\Controllers\Admin\Home\HomeController;
+use App\Http\Controllers\Admin\Post\PostController;
+use App\Http\Controllers\Admin\User\UserController;
 
 Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');

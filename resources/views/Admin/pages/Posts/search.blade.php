@@ -15,23 +15,21 @@
 
                         <div class="m-3 text-center">
                             <img src="{{ $post->image() }}" height="400" width="50%" alt="">
-                        </div>
+                        </div>  
 
                         <div class="card-body">
                             <h5 class="card-title">{{ $post->title }}</h5>
-                            <p class="card-text">{{ Str::limit($post->description, 200, '.........') }}</p>
+                            <p class="card-text">{{ Str::limit($post->description, 50, '.........') }}</p>
+
                             <a href="{{ route('post.show', $post->id) }}" class="btn btn-primary">Show Post</a>
                         </div>
                     </div>
                 </div>
-                @empty
+            @empty
                 <div class="col-12">
                     <h3 class="mt-3 p-3 border text-center bg-info text-white rounded">No Result of search !</h3>
                 </div>
             @endforelse
-            <div class="mt-4">
-                {{ $posts->links() }}
-            </div>
         </div>
     </div>
 @endsection
