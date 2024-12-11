@@ -2,23 +2,30 @@
 
 namespace App\Http\Controllers\Admin\Post;
 
+use File;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\User;
-use File;
+use App\Exports\PostsExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\PostRequest;
-use Barryvdh\Debugbar\Facades\Debugbar;
-use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user','tags')->orderBy('id', 'DESC')->paginate(12);
+        $posts = Post::with('user', 'tags')->orderBy('id', 'DESC')->paginate(12);
         return view('Admin.pages.posts.index', compact('posts'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new PostsExport, 'posts.xlsx');
     }
 
     public function search(Request $request)

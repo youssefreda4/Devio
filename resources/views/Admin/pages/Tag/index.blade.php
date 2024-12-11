@@ -4,9 +4,9 @@
         <div class="row">
             <div class="col-12">
                 <h1 class="mt-3 p-3 border text-center bg-dark text-white rounded">All Tags</h1>
-                @can('create', Tag::class)
+                {{-- @can('create', Tag::class) --}}
                     <a href="{{ route('tags.create') }}" class="btn btn-primary my-3">Add New Tag</a>
-                @endcan
+                {{-- @endcan --}}
             </div>
             <div class="col-12">
                 <x-error></x-error>

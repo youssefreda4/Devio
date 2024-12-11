@@ -1,25 +1,25 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('home') }}">Devio</a>
+        <a class="navbar-brand" href="{{ route('admin.home') }}">Devio</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item @if(request()->is('/')) active @endif">
-                    <a class="nav-link " aria-current="page" href="{{ route('home') }}">Home</a>
+                <li class="nav-item @if (request()->is('admin/home')) active @endif">
+                    <a class="nav-link " aria-current="page" href="{{ route('admin.home') }}">Home</a>
                 </li>
                 @auth
 
-                    <li class="nav-item @if(request()->is('post*')) active @endif">
+                    <li class="nav-item @if (request()->is('admin/posts*')) active @endif">
                         <a class="nav-link" href="{{ route('post.view') }}">Posts</a>
                     </li>
                     @can('admin-control')
-                        <li class="nav-item @if(request()->is('users*')) active @endif">
+                        <li class="nav-item @if (request()->is('admin/users*')) active @endif">
                             <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                         </li>
-                        <li class="nav-item @if(request()->is('tags*')) active @endif">
+                        <li class="nav-item @if (request()->is('admin/tags*')) active @endif">
                             <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
                         </li>
                     @endcan

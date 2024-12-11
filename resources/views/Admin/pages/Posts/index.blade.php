@@ -4,9 +4,10 @@
         <div class="row">
             <div class="col-12">
                 <h1 class="mt-3 p-3 border text-center bg-dark text-white rounded">All Posts</h1>
-                @can('create-post')
+                {{-- @can('create-post') --}}
                     <a href="{{ route('post.create') }}" class="btn btn-primary my-3">Add New Post</a>
-                @endcan
+                    <a href="{{ route('post.export') }}" class="btn btn-info my-3">Export Excel</a>
+                {{-- @endcan --}}
             </div>
             <div class="col-12">
                 <x-error></x-error>
@@ -29,11 +30,15 @@
                                 <td>{{ $post->title }}</td>
                                 <td>{{ Str::limit($post->description, 50, '.........') }}</td>
                                 <td>{{ $post->user->name }}</td>
-                                <td>
-                                    @foreach ($post->tags as $tag)
-                                        <span class="badge bg-warning my-1">{{ $tag->name }}</span>
+                                <td class="text-center">
+                                    @forelse ($post->tags as $tag)
+                                        <span class="badge bg-warning my-1">{{ $tag->name}}</span>
                                         <br>
-                                    @endforeach
+                                        @empty
+                                        <span class="badge bg-danger my-1">
+                                            No Tag!
+                                        </span>
+                                    @endforelse
                                 </td>
                                 <td class="text-center">
                                     <img src="{{ $post->image() }}" height="100" width="100" alt="">
