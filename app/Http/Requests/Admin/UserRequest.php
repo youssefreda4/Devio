@@ -25,7 +25,9 @@ class UserRequest extends FormRequest
             'name' => 'required|string|min:3|max:100',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|confirmed',
-            'type' => 'required|in:admin,writer'
+            'type' => 'required|in:admin,writer',
+            'image' => 'image'
+
         ];
     }
 }

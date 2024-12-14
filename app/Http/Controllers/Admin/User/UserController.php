@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\User;
 
+use File;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -38,8 +39,14 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $userData = $request->validated();
-        User::create($userData);
+        $image = $request->file('image')->store('/public/users');
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'type' => $request->type,
+            'image' => $image
+        ]);
         return back()->with('success', 'User added successfully');
     }
 
@@ -72,16 +79,31 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+
+
+        
         $data = $request->validate([
             'name' => 'required|string|min:3|max:100',
             'email' => 'required|email',
             Rule::unique('users')->ignore($user->id),
             'password' => 'nullable|string|confirmed',
-            'type' => 'required|in:admin,writer'
+            'type' => 'required|in:admin,writer',
+            'image' => 'image'
         ]);
+        
+        $old_image = $user->image;
+        if ($request->hasFile('image')) {
+            File::delete($old_image);
+            $request->validate([
+                'image' => 'image|mimes:png,jpg,jpeg,gif'
+            ]);
+            $image_name = $request->file('image')->store('/public/users');
+        } else {
+            $image_name = $old_image;
+        }
 
         $data['password'] = $request->has('password') ? bcrypt($request->password) : $user->password;
-
+        $data['image'] = $image_name;
         $user->update($data);
 
         return redirect()->route('users.index', $user->id)->with('success', 'User updated successfully');
@@ -92,6 +114,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $userImage = $user->image;
+        File::delete($userImage);
         $user->delete();
         return back()->with('success', 'User deleted successfully');
     }

@@ -8,7 +8,7 @@
             <div class="col-12 mx-auto mt-3">
                 <x-error></x-error>
                 <x-success></x-success>
-                <form action="{{ route('users.update', $user->id) }}" method="POST" class="form border rounded p-3">
+                <form action="{{ route('users.update', $user->id) }}" method="POST" class="form border rounded p-3" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
 
@@ -32,6 +32,16 @@
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" name="password_confirmation"
                             placeholder="Confirm your password">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Post Image</label>
+                        <input type="file" class="form-control" name="image">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Post Photo</label>
+                        <img src="{{ $user->image() }}" height="350" width="100%" alt="">
                     </div>
 
                     <div class="mb-3">

@@ -14,6 +14,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th class="text-center">Image</th>
                         <th class="text-center">Posts</th>
                         <th class="text-center">Type</th>
                         <th class="text-center">Edit</th>
@@ -26,6 +27,9 @@
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td class="text-center">
+                                    <img src="{{ $user->image() }}" height="100" width="100" alt="">
+                                </td>
                                 <td class="text-center">
                                     <a href="{{ route('users.posts', $user->id) }}" class="btn btn-primary">Show</a>
                                 </td>

@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user')->orderBy('id', 'DESC')->limit(8)->get();
+        $posts = Post::with('user')->orderBy('id', 'DESC')->limit(6)->get();
         return view('Front.pages.home.index', compact('posts'));
     }
 }

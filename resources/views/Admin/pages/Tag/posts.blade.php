@@ -26,6 +26,10 @@
                             </div>
                         </div>
 
+                        <div class="m-2 text-center">
+                            <img src="{{ $post->image() }}" class="img-fluid" style="max-height: 200px;" alt="">
+                        </div>
+
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <a href="{{ route('post.show', $post->id) }}" class="btn btn-primary">Show Post</a>
                             <form action="{{ route('post.delete', $post->id) }}" method="POST" class="mb-0">

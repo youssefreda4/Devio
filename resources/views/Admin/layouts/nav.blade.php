@@ -15,14 +15,17 @@
                     <li class="nav-item @if (request()->is('admin/posts*')) active @endif">
                         <a class="nav-link" href="{{ route('post.view') }}">Posts</a>
                     </li>
-                    @can('admin-control')
+                    {{-- @can('admin-control') --}}
                         <li class="nav-item @if (request()->is('admin/users*')) active @endif">
                             <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                         </li>
                         <li class="nav-item @if (request()->is('admin/tags*')) active @endif">
                             <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
                         </li>
-                    @endcan
+                        <li class="nav-item @if (request()->is('admin/settings*')) active @endif">
+                            <a class="nav-link" href="{{ route('settings.view') }}">Settings</a>
+                        </li>
+                    {{-- @endcan --}}
                 @endauth
             </ul>
 

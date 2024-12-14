@@ -18,7 +18,17 @@ class User extends Authenticatable
     {
         return $this->HasMany(Post::class);
     }
-  
+
+    public function likedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id');
+    }
+
+    public function comments()
+    {
+        return $this->HasMany(Comment::class);
+    }
+
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +39,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type'
+        'type',
+        'image',
     ];
 
     /**
@@ -61,5 +72,13 @@ class User extends Authenticatable
             return "<span class='badge bg-success'>" . $this->type . " </span>";
         }
         return "<span class='badge bg-warning'>" . $this->type . " </span>";
+    }
+
+    public function image()
+    {
+        if ($this->image) {
+            return asset($this->image);
+        }
+        return asset('default.png');
     }
 }

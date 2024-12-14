@@ -8,7 +8,7 @@
             <div class="col-12 mx-auto mt-3">
                 <x-error></x-error>
                 <x-success></x-success>
-                <form action="{{ route('users.store') }}" method="POST" class="form border rounded p-3">
+                <form action="{{ route('users.store') }}" method="POST" class="form border rounded p-3" enctype="multipart/form-data">
 
                     @csrf
 
@@ -19,8 +19,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Email</label>
-                        <input type="text" class="form-control" value="{{ old('email') }}" name="email" id="email"
+                        <input type="email" class="form-control" value="{{ old('email') }}" name="email" id="email"
                             placeholder="Enter your email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Post Image</label>
+                        <input type="file" class="form-control" name="image">
                     </div>
 
                     <div class="mb-3">
