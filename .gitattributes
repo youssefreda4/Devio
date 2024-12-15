@@ -9,3 +9,6 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+*.css export-ignore
+*.md export-ignore
+*.html export-ignore
