@@ -6,8 +6,8 @@
                 <h1 class="mt-3 p-3 border text-center bg-dark text-white rounded">All Posts</h1>
                 {{-- @can('create-post') --}}
                     <a href="{{ route('post.create') }}" class="btn btn-primary my-3">Add New Post</a>
-                    <a href="{{ route('post.export') }}" class="btn btn-info my-3">Export Excel</a>
-                    <a href="{{ route('post.pdf.export') }}" class="btn btn-success my-3">Export Pdf</a>
+                    <a href="{{ route('post.export') }}" class="btn btn-success my-3">Export Excel</a>
+                    <a href="{{ route('post.pdf.export') }}" class="btn btn-danger my-3">Export Pdf</a>
                 {{-- @endcan --}}
             </div>
             <div class="col-12">

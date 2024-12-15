@@ -36,6 +36,7 @@ Route::middleware('writer.area', 'auth')->group(function () {
             Route::get('/profile', 'index')->name('front.profile');
             Route::get('/profile/{user}/edit', 'edit')->name('front.profile.edit');
             Route::put('/profile/{user}', 'update')->name('front.profile.update');
+            Route::get('/profile/{user}/show', 'show')->name('front.profile.show');
         });
     });
 });

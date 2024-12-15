@@ -51,4 +51,13 @@ class ProfileController extends Controller
 
         return redirect()->route('front.profile', $user->id)->with('success', 'User updated successfully');
     }
+
+    public function show(User $user)
+    {
+        $posts = Post::with('user')
+            ->where('user_id', $user->id)
+            ->orderBy('id', 'DESC')
+            ->paginate(8);
+        return view('Front.pages.profile.show', compact('user', 'posts'));
+    }
 }

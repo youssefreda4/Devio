@@ -11,7 +11,7 @@ use App\Http\Controllers\PDFController;
 Route::get('/admin/home', [HomeController::class, 'index'])->name('admin.home');
 Route::get('/admin/posts/search', [PostController::class, 'search'])->name('post.search');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('admin.area','auth')->group(function () {
 
     Route::get('/admin/posts', [PostController::class, 'index'])->name('post.view');
     Route::get('/admin/posts/export', [PostController::class, 'export'])->name('post.export');

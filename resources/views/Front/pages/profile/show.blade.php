@@ -14,8 +14,6 @@
                         <!-- Profile Name and Edit Button -->
                         <div>
                             <h2 class="profile-name mb-1">{{ $user->name }}</h2>
-                            <a href="{{ route('front.profile.edit', $user->id) }}"
-                                class="btn btn-primary rounded btn-sm">Edit Profile</a>
                         </div>
                     </div>
 
@@ -28,13 +26,7 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                @auth
-                    <div class="col-12">
-                        <a href="{{ route('front.posts.create') }}" class="btn btn-primary rounded my-3">Add New Post</a>
-                    </div>
-                @endauth
-                <x-error></x-error>
-                <x-success></x-success>
+
                 <!-- Post preview-->
                 @forelse ($posts as $post)
                     <div class="post-preview">
@@ -74,20 +66,6 @@
                                 <input type="submit" value="Like ({{ count($post->usersLiked) }})"
                                     class="btn btn-info rounded">
                             </form>
-
-                            @auth
-                                <!-- Edit and Delete Buttons -->
-                                @if ($post->user_id == auth()->user()->id)
-                                    <a href="{{ route('front.posts.edit', $post->id) }}"
-                                        class="btn btn-primary rounded">Edit</a>
-
-                                    <form action="{{ route('front.posts.destroy', $post->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="submit" value="Delete" class="btn btn-danger rounded">
-                                    </form>
-                                @endif
-                            @endauth
                         </div>
                     </div>
                 @empty

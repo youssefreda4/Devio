@@ -37,9 +37,11 @@
                             <h2 class="post-title">{{ $post->title }}</h2>
                             <h3 class="post-subtitle">{{ Str::limit($post->description, 200, '.......') }}</h3>
                         </a>
-                        <div class="mb-3">
-                            <img src="{{ $post->image() }}" alt="" class="rounded" width="650px">
-                        </div>
+                        @if ($post->image != null)
+                            <div class="mb-3">
+                                <img src="{{ $post->image() }}" class="rounded" alt="" width="700px">
+                            </div>
+                        @endif
 
                         @forelse ($post->tags as $tag)
                             <a href="{{ route('front.posts.showPostsTag', $tag->id) }}">
@@ -55,7 +57,9 @@
 
                         <p class="post-meta">
                             Posted by
-                            <strong>{{ $post->user->name }}</strong>
+                            <a href="{{ route('front.profile.show', $post->user->id) }}">
+                                <strong>{{ $post->user->name }}</strong>
+                            </a>
                             on {{ $post->created_at->diffForHumans() }}
                         </p>
                     </div>
@@ -64,14 +68,16 @@
                             <!-- Like Button -->
                             <form action="{{ route('front.posts.likedstore', $post->id) }}" method="POST">
                                 @csrf
-                                <input type="submit" value="Like ({{ count($post->usersLiked) }})" class="btn btn-info rounded">
+                                <input type="submit" value="Like ({{ count($post->usersLiked) }})"
+                                    class="btn btn-info rounded">
                             </form>
-                    
+
                             @auth
                                 <!-- Edit and Delete Buttons -->
                                 @if ($post->user_id == auth()->user()->id)
-                                    <a href="{{ route('front.posts.edit', $post->id) }}" class="btn btn-primary rounded">Edit</a>
-                                    
+                                    <a href="{{ route('front.posts.edit', $post->id) }}"
+                                        class="btn btn-primary rounded">Edit</a>
+
                                     <form action="{{ route('front.posts.destroy', $post->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -81,7 +87,7 @@
                             @endauth
                         </div>
                     </div>
-                    
+
                     <!-- Divider-->
                     <hr class="my-4" />
                 @endforeach

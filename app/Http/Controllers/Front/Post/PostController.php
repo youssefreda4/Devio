@@ -10,10 +10,11 @@ use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\LikeNotification;
 use App\Http\Requests\Front\PostRequest;
 use App\Notifications\CommentNotification;
 use App\Http\Requests\Front\CommentRequest;
-use App\Notifications\LikeNotification;
 
 class PostController extends Controller
 {
@@ -53,12 +54,15 @@ class PostController extends Controller
     {
         // Gate::authorize('create-post');
 
-        $image = $request->file('image')->store('/public');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('/public');
+        }
+        $image = NULL;
         $post = Post::create([
             'title' => $request->title,
             'description' => $request->description,
             'image' => $image,
-            'user_id' => auth()->user()->id
+            'user_id' => Auth::user()->id
         ]);
         $post->tags()->sync($request->tags);
         return redirect()->route('front.posts')->with('success', 'Post added successfully');
@@ -66,12 +70,17 @@ class PostController extends Controller
 
     public function likedStore(Post $post)
     {
-        $user_id = auth()->user()->id;
+        $user = $post->user;
+        $user_id = Auth::user()->id;
         $findLike = Like::where('post_id', $post->id)
             ->where('user_id', $user_id)
-            ->count();
+            ->first();
+        if ($findLike) {
+            $findLike->delete();
+            $user->notifications()
+                ->first()
+                ->delete();
 
-        if ($findLike >= 1) {
             return back();
         }
 
@@ -80,7 +89,6 @@ class PostController extends Controller
             'user_id' => $user_id
         ]);
 
-        $user = $post->user;
         $user->notify(new LikeNotification($like));
         return back();
     }
@@ -90,7 +98,7 @@ class PostController extends Controller
         $data = Comment::create([
             'content' => $request->comment,
             'post_id' => $post->id,
-            'user_id' => auth()->user()->id
+            'user_id' => Auth::user()->id
         ]);
 
         $user = $post->user;
@@ -102,7 +110,7 @@ class PostController extends Controller
 
     public function markAsRead($notification)
     {
-        $notification = auth()->user()->notifications->find($notification);
+        $notification = Auth::user()->notifications->find($notification);
         if ($notification) {
             $notification->markAsRead();
         }

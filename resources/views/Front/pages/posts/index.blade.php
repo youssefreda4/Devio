@@ -32,9 +32,11 @@
                             <h2 class="post-title">{{ $post->title }}</h2>
                             <h3 class="post-subtitle">{{ Str::limit($post->description, 200, '.......') }}</h3>
                         </a>
+                        @if($post->image != NULL)
                         <div class="mb-3">
                             <img src="{{ $post->image() }}" class="rounded" alt="" width="700px">
                         </div>
+                        @endif
 
                         @forelse ($post->tags as $tag)
                             <a href="{{ route('front.posts.showPostsTag', $tag->id) }}">
@@ -49,7 +51,9 @@
 
                         <p class="post-meta">
                             Posted by
-                            <strong>{{ $post->user->name }}</strong>
+                            <a href="{{ route('front.profile.show',$post->user->id) }}">
+                                <strong>{{ $post->user->name }}</strong>
+                            </a>
                             on {{ $post->created_at->diffForHumans() }}
                         </p>
                     </div>

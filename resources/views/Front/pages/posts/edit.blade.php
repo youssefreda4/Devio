@@ -49,16 +49,18 @@
                         <input type="file" class="form-control rounded" name="image">
                     </div>
 
+                    @if($post->image != NULL)
                     <div class="mb-3">
                         <div>
                             <label for="image" class="">Post Photo</label>
                         </div>
-
-                        <img src="{{ $post->image() }}" class="rounded mt-3" width="700px" alt="">
+                        <img src="{{ $post->image() }}" class="rounded" alt="" width="700px">
                     </div>
+                    @endif
+
 
                     <div class="mb-3 mb-3">
-                        <input type="submit" class="btn btn-primary rounded" value="update">
+                        <input type="submit" class="btn btn-primary rounded" value="Update">
                     </div>
                 </form>
             </div>

@@ -23,9 +23,11 @@
                         <h2 class="post-title">{{ $post->title }}</h2>
                         <h3 class="post-subtitle">{{ Str::limit($post->description, 200, '.......') }}</h3>
                     </a>
-                    <div class="mb3">
-                        <img src="{{ $post->image() }}" alt="Post Image" class="img-fluid rounded" width="700px">
-                    </div>
+                    @if ($post->image != null)
+                        <div class="mb-3">
+                            <img src="{{ $post->image() }}" class="rounded" alt="" width="700px">
+                        </div>
+                    @endif
 
                     @forelse ($post->tags as $tag)
                         <a href="{{ route('front.posts.showPostsTag', $tag->id) }}">
@@ -40,33 +42,36 @@
 
                     <p class="mb-3">
                         Posted by
-                        <strong>{{ $post->user->name }}</strong>
+                        <a href="{{ route('front.profile.show', $post->user->id) }}">
+                            <strong>{{ $post->user->name }}</strong>
+                        </a>
                         on {{ $post->created_at->format('Y-m-d') }}
                     </p>
                 </div>
 
-               <div class="col-12">
-                        <div class="d-flex align-items-center justify-content-start gap-2">
-                            <!-- Like Button -->
-                            <form action="{{ route('front.posts.likedstore', $post->id) }}" method="POST">
-                                @csrf
-                                <input type="submit" value="Like ({{ count($post->usersLiked) }})" class="btn btn-info rounded">
-                            </form>
-                    
-                            @auth
-                                <!-- Edit and Delete Buttons -->
-                                @if ($post->user_id == auth()->user()->id)
-                                    <a href="{{ route('front.posts.edit', $post->id) }}" class="btn btn-primary rounded">Edit</a>
-                                    
-                                    <form action="{{ route('front.posts.destroy', $post->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="submit" value="Delete" class="btn btn-danger rounded">
-                                    </form>
-                                @endif
-                            @endauth
-                        </div>
+                <div class="col-12">
+                    <div class="d-flex align-items-center justify-content-start gap-2">
+                        <!-- Like Button -->
+                        <form action="{{ route('front.posts.likedstore', $post->id) }}" method="POST">
+                            @csrf
+                            <input type="submit" value="Like ({{ count($post->usersLiked) }})"
+                                class="btn btn-info rounded">
+                        </form>
+
+                        @auth
+                            <!-- Edit and Delete Buttons -->
+                            @if ($post->user_id == auth()->user()->id)
+                                <a href="{{ route('front.posts.edit', $post->id) }}" class="btn btn-primary rounded">Edit</a>
+
+                                <form action="{{ route('front.posts.destroy', $post->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" value="Delete" class="btn btn-danger rounded">
+                                </form>
+                            @endif
+                        @endauth
                     </div>
+                </div>
 
                 <!-- Divider-->
                 <hr class="my-4 ml-3" />
@@ -81,7 +86,7 @@
                         <div class="form-group">
                             <textarea class="form-control rounded" name="comment" rows="4" placeholder="Your comment" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-2">Add Comment</button>
+                        <button type="submit" class="btn btn-primary rounded mt-2">Add Comment</button>
                     </form>
                 @else
                     <div class="col-12 mb-3">
@@ -102,7 +107,9 @@
                         <!-- Example Comment 1 -->
                         <div class="row mb-3 border rounded p-3">
                             <div class="col-9">
-                                <h5 class="">{{ $comment->user->name }}</h5>
+                                <a href="{{ route('front.profile.show', $post->user->id) }}">
+                                    <h5 class="">{{ $comment->user->name }}</h5>
+                                </a>
                                 <p>{{ $comment->content }}</p>
                                 <small class="text-muted"> {{ $comment->created_at->diffForHumans() }}</small>
 

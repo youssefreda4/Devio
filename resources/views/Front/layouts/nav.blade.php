@@ -78,7 +78,7 @@
                 @else
                     @if (auth()->user()->type == 'admin')
                         <li class="nav-item "><a class="nav-link px-lg-3 py-3 py-lg-4 text-primary"
-                                href="{{ route('post.view') }}">Dashboard</a></li>
+                                href="{{ route('admin.home') }}">Dashboard</a></li>
                     @else
                         <li class="nav-item dropdown mt-3">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
